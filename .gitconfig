@@ -1,0 +1,8 @@
+[user]
+	name = Torbjørn Wiik
+	email = torwii22@gmail.com
+	signingkey = 309D2423C6CAC2CFD5C4DFE7B10867F125F365E4
+[credentials]
+	helper = osxkeychain
+[core]
+	excludesfile = ~/.gitignore_global
