@@ -8,7 +8,7 @@ set -e
 # Variables
 dotfiles_dir="$HOME/.dotfiles"
 brewfile="$dotfiles_dir/.Brewfile"
-ohmysh_dir="$HOME/.oh-my-zsh"
+ohmyzsh_dir="$HOME/.oh-my-zsh"
 
 # Function to print messages
 info() {
