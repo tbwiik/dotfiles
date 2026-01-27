@@ -8,11 +8,27 @@ set -e
 # Variables
 dotfiles_dir="$HOME/.dotfiles"
 brewfile="$dotfiles_dir/.Brewfile"
+ohmysh_dir="$HOME/.oh-my-zsh"
 
 # Function to print messages
 info() {
-    echo "\033[1;34m[INFO]\033[0m $1"
+    printf "\033[1;34m[INFO]\033[0m $1"
 }
+
+# Ask for sudo password upfront
+if sudo -v; then
+    info "Sudo credentials cached."
+else
+    echo "Sudo authentication failed."
+    exit 1
+fi
+
+# Keep sudo alive while script runs
+while true; do
+    sudo -n true
+    sleep 60
+    kill -0 "$$" || exit
+done 2>/dev/null &
 
 # 1. Install Xcode Command Line Tools if not installed
 if ! xcode-select -p &>/dev/null; then
