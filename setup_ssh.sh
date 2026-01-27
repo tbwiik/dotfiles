@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# NOTE: AI generated, bit insecure on security
+
 # Setup SSH keys and config for the user
 set -e
 
