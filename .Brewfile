@@ -13,5 +13,3 @@ cask "slack"
 cask "zotero"
 cask "chatgpt"
 cask "iterm2"
-
-brew "docker-compose"
