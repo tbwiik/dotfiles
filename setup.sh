@@ -113,10 +113,31 @@ install_theme "powerlevel10k" \
 
 # 6. Symlink dotfiles
 symlink_dotfile() {
+<<<<<<< HEAD
     local src="$dotfiles_dir/$1"
     local dest="$HOME/$1"
 
     if [ -e "$dest" ]; then
+=======
+    local filename="$1"
+    local src="$dotfiles_dir/$filename"
+    local dest="$HOME/$filename"
+
+    if [ ! -e "$src" ]; then
+        info "Source file $src does not exist. Skipping."
+        return
+    fi
+
+    if [ -L "$dest" ]; then
+        if [ "$(readlink "$dest")" = "$src" ]; then
+            info "$dest already symlinked correctly."
+            return
+        else
+            info "$dest is a symlink pointing elsewhere. Removing and re-linking."
+            rm "$dest"
+        fi
+    elif [ -e "$dest" ]; then
+>>>>>>> 348d388 (tmp)
         info "$dest already exists. Backing up to $dest.backup"
         mv "$dest" "$dest.backup"
     fi
@@ -130,5 +151,20 @@ symlink_dotfile ".zshrc"
 symlink_dotfile ".aliases"
 symlink_dotfile ".gitconfig"
 symlink_dotfile ".gitignore_global"
+<<<<<<< HEAD
+=======
+symlink_dotfile ".vimrc"
+
+# 7. Apply macOS defaults if provided by the dotfiles
+macos_script="$dotfiles_dir/.macos.sh"
+
+if [ -f "$macos_script" ]; then
+    info "Applying macOS defaults from $macos_script..."
+    chmod +x "$macos_script"
+    sh "$macos_script" || info "macOS defaults script exited with a non-zero status."
+else
+    info ".macos.sh not found. Skipping macOS defaults."
+fi
+>>>>>>> 348d388 (tmp)
 
 info "Setup complete! Restart your terminal or source your .zshrc: source ~/.zshrc"

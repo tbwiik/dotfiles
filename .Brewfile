@@ -2,6 +2,7 @@
 brew "python"
 brew "git"
 brew "zsh"
+brew "gnupg"
 
 # Casks
 cask "visual-studio-code"
