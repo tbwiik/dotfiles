@@ -6,3 +6,6 @@
 	helper = osxkeychain
 [core]
 	excludesfile = ~/.gitignore_global
+	editor = nvim
+[sequence]
+	editor = code --wait
