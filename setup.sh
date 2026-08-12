@@ -7,7 +7,7 @@ set -e
 
 # Variables
 dotfiles_dir="$HOME/.dotfiles"
-brewfile="$dotfiles_dir/.Brewfile"
+brewfile="$dotfiles_dir/Brewfile"
 ohmyzsh_dir="$HOME/.oh-my-zsh"
 
 # Function to print messages
@@ -53,10 +53,10 @@ fi
 
 # 3. Install Brewfile packages
 if [ -f "$brewfile" ]; then
-    info "Installing Homebrew packages from .Brewfile..."
+    info "Installing Homebrew packages from Brewfile..."
     brew bundle --file="$brewfile"
 else
-    info ".Brewfile not found. Skipping package installation."
+    info "Brewfile not found. Skipping package installation."
 fi
 
 # 4. Install Oh My Zsh
@@ -111,16 +111,17 @@ install_plugin "zsh-completions" \
 install_theme "powerlevel10k" \
     "https://github.com/romkatv/powerlevel10k.git"
 
-# 6. Symlink dotfiles
-symlink_dotfile() {
-    local filename="$1"
-    local src="$dotfiles_dir/$filename"
-    local dest="$HOME/$filename"
+# 6. Symlink dotfiles (files AND directories)
+symlink_path() {
+    local src="$1"
+    local dest="$2"
 
     if [ ! -e "$src" ]; then
-        info "Source file $src does not exist. Skipping."
+        info "Source $src does not exist. Skipping."
         return
     fi
+
+    mkdir -p "$(dirname "$dest")"
 
     if [ -L "$dest" ]; then
         if [ "$(readlink "$dest")" = "$src" ]; then
@@ -140,13 +141,22 @@ symlink_dotfile() {
 }
 
 info "Linking dotfiles..."
-symlink_dotfile ".zshrc"
-symlink_dotfile ".aliases"
-symlink_dotfile ".gitconfig"
-symlink_dotfile ".gitignore_global"
-symlink_dotfile ".vimrc"
+symlink_path "$dotfiles_dir/.zshrc" "$HOME/.zshrc"
+symlink_path "$dotfiles_dir/.aliases" "$HOME/.aliases"
+symlink_path "$dotfiles_dir/.gitconfig" "$HOME/.gitconfig"
+symlink_path "$dotfiles_dir/.gitignore_global" "$HOME/.gitignore_global"
+symlink_path "$dotfiles_dir/.vimrc" "$HOME/.vimrc"
+symlink_path "$dotfiles_dir/nvim" "$HOME/.config/nvim"
 
-# 7. Apply macOS defaults if provided by the dotfiles
+# 7. Sync Neovim (NvChad) plugins headlessly so it's ready without manual launch
+if command -v nvim &>/dev/null; then
+    info "Syncing Neovim plugins (headless)..."
+    nvim --headless "+Lazy! sync" +qa || info "Neovim plugin sync exited with a non-zero status."
+else
+    info "nvim not found, skipping plugin sync."
+fi
+
+# 8. Apply macOS defaults if provided by the dotfiles
 macos_script="$dotfiles_dir/.macos.sh"
 
 if [ -f "$macos_script" ]; then
@@ -158,3 +168,4 @@ else
 fi
 
 info "Setup complete! Restart your terminal or source your .zshrc: source ~/.zshrc"
+
