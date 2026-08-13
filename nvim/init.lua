@@ -35,3 +35,7 @@ require "autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+-- custom
+vim.o.autowrite = true
+

@@ -3,10 +3,11 @@ brew "python"
 brew "git"
 brew "zsh"
 brew "gnupg"
-brew "neovim"
 
-# Taps
-tap "homebrew/cask-fonts"
+# Neovim/Nvchad related formulas
+brew "neovim"
+brew "ripgrep"
+brew "fd"
 
 # Casks
 cask "visual-studio-code"
