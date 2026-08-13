@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    -- event = 'BufWritePre', -- uncomment for format on save
+    event = "BufWritePre", -- uncomment for format on save
     opts = require "configs.conform",
   },
 
@@ -30,4 +30,33 @@ return {
   -- 		},
   -- 	},
   -- },
+  --
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre",
+    opts = { dir = vim.fn.expand(vim.fn.stdpath "state") .. "/sessions/" },
+    keys = {
+      {
+        "<leader>qs",
+        function()
+          require("persistence").load()
+        end,
+        desc = "Restore Session",
+      },
+      {
+        "<leader>qS",
+        function()
+          require("persistence").select()
+        end,
+        desc = "Select Session",
+      },
+      {
+        "<leader>ql",
+        function()
+          require("persistence").load { last = true }
+        end,
+        desc = "Restore Last Session",
+      },
+    },
+  },
 }
