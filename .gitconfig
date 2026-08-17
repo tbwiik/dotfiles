@@ -8,4 +8,4 @@
 	excludesfile = ~/.gitignore_global
 	editor = nvim
 [sequence]
-	editor = code --wait
+  editor = nvim
