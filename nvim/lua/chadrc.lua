@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-	theme = "onedark",
+	theme = "material-darker",
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },
@@ -19,7 +19,8 @@ M.ui = {
 --       tabufline = {
 --          lazyload = false
 --      }
-     vim.o.autoread = true
 }
+
+vim.o.autoread = true
 
 return M
