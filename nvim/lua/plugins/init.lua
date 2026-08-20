@@ -32,6 +32,18 @@ return {
   -- },
   --
   {
+    "mfussenegger/nvim-dap",
+    lazy = true,
+  },
+  {
+    "mfussenegger/nvim-dap-python",
+    lazy = true,
+    config = function()
+      require("dap-python").setup("uv")
+    end
+    dependencies = { "mfussenegger/nvim-dap" },
+  },
+  {
     "folke/persistence.nvim",
     event = "BufReadPre",
     opts = { dir = vim.fn.expand(vim.fn.stdpath "state") .. "/sessions/" },
