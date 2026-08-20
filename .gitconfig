@@ -9,3 +9,5 @@
 	editor = nvim
 [sequence]
   editor = nvim
+[push]
+	autoSetupRemote = true
