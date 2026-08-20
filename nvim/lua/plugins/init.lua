@@ -40,7 +40,7 @@ return {
     lazy = true,
     config = function()
       require("dap-python").setup("uv")
-    end
+    end,
     dependencies = { "mfussenegger/nvim-dap" },
   },
   {
